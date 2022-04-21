@@ -59,7 +59,7 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
         
         if ID == id:
             byte = struct.calcsize("d")
-            return '{} bytes from {}: icmp_seq = {} ttl = {} time = {:.3f} ms'.format(length, destAddr, sequence, ttl, rtt)
+            return '{} bytes from {}: icmp_seq = {} ttl = {} time = {:.3f} ms'.format(length, destAddr, Sequence, ttl, rtt)
         
                 
         #Fill in end
