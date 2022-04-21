@@ -49,7 +49,7 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
         icmpHeader = recPacket[20:28]
 
         sent = struct.unpack('s', bytes([recPacket[8]]))[0]
-        ttl = ((int(binascii.hexlify(sent), 16)) - timeReceived) * 1000
+        rtt = ((int(binascii.hexlify(sent), 16)) - timeReceived) * 1000
 
         ip_header = struct.unpack('!BBHHHBBH4s4s', recPacket[:20])
         ttl = int(binascii.hexlify(sent), 16)
