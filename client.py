@@ -46,24 +46,20 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
         #Fill in start
         #Fetch the ICMP header from the IP packet
 
-        type, code, myChecksum, id, sequence = struct.unpack("bbHHh", recPacket[20:28])
+        icmpHeader = recPacket[20:28]
 
-        if type != 8:
-            return 'Did not receive type = 8, received type = {}'.format(type)
-        if code != 8:
-            return 'Did not receive code = 8, received code = {}'.format(code)
-        if id != 16:
-            return 'Did not receive id = 16, received id = {}'.format(id)
-        sent = struct.unpack('d', recPacket[28:])
-
-        rtt = (timeReceived - sent) * 1000
+        sent = struct.unpack('s', bytes([recPacket[8]]))[0]
+        ttl = ((int(binascii.hexlify(sent), 16)) - timeReceived) * 1000
 
         ip_header = struct.unpack('!BBHHHBBH4s4s', recPacket[:20])
-        ttl = ip_header[5]
-        sent_addr = socket.inet_ntoa(ip_header[8])
+        ttl = int(binascii.hexlify(sent), 16)
         length = len(recPacket) - 20
 
-        return '{} bytes from {}: icmp_seq = {} ttl = {} time = {:.3f} ms'.format(length, sent_addr, sequence, ttl, rtt)
+        Type, Code, Checksum, id, Sequence = struct.unpack("bbHHh", icmpHeader)
+        
+        if ID == id:
+            byte = struct.calcsize("d")
+            return '{} bytes from {}: icmp_seq = {} ttl = {} time = {:.3f} ms'.format(length, sent_addr, sequence, ttl, rtt)
         
                 
         #Fill in end
@@ -109,7 +105,7 @@ def doOnePing(destAddr, timeout):
     result = receiveOnePing(mySocket, myID, timeout, destAddr)
     mySocket.close()
     return result
-
+ 
 def ping(host, timeout=1):
     # timeout=1 means: If one second goes by without a reply from the server,
     # the client assumes that either the client's ping or the server's pong is
@@ -130,3 +126,4 @@ def ping(host, timeout=1):
 
 if __name__ == '__main__':
     ping("google.co.il")
+
