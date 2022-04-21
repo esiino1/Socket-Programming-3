@@ -52,15 +52,12 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
         rtt = ((int(binascii.hexlify(sent), 16)) - timeReceived) * 1000
 
         ip_header = struct.unpack('!BBHHHBBH4s4s', recPacket[:20])
-        ttl = int(binascii.hexlify(sent), 16)
+        ttl = int(binascii.hexlify(sent))
         length = len(recPacket) - 20
 
-        Type, Code, Checksum, id, Sequence = struct.unpack("bbHHh", icmpHeader)
+        Type, Code, Checksum, ID, Sequence, ttl = struct.unpack("bbHHh", icmpHeader)
         
-        if ID == id:
-            byte = struct.calcsize("d")
-            return '{} bytes from {}: icmp_seq = {} ttl = {} time = {:.3f} ms'.format(length, destAddr, Sequence, ttl, rtt)
-        
+        return icmpHeader
                 
         #Fill in end
         
