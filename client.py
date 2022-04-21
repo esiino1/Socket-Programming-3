@@ -48,22 +48,22 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
 
         type, code, myChecksum, id, sequence = struct.unpack("bbHHh", recPacket[20:28])
 
-        if type != 0:
-            return 'Did not receive type = 0'
-        if code != 0:
-            return 'Did not receive code = 0'
-        if id != ID:
-            return 'Did not receive id = {}'.format(ID)
+        if type != 8:
+            return 'Did not receive type = 8, received type = {}'.format(type)
+        if code != 8:
+            return 'Did not receive code = 8, received code = {}'.format(code)
+        if id != 16:
+            return 'Did not receive id = 16, received id = {}'.format(id)
         sent = struct.unpack('d', recPacket[28:])
 
         rtt = (timeReceived - sent) * 1000
 
         ip_header = struct.unpack('!BBHHHBBH4s4s', recPacket[:20])
         ttl = ip_header[5]
-        saddr = socket.inet_ntoa(ip_header[8])
+        sent_addr = socket.inet_ntoa(ip_header[8])
         length = len(recPacket) - 20
 
-        return '{} bytes from {}: icmp_seq = {} ttl = {} time = {:.3f} ms'.format(length, saddr, seq, ttl, rtt)
+        return '{} bytes from {}: icmp_seq = {} ttl = {} time = {:.3f} ms'.format(length, sent_addr, sequence, ttl, rtt)
         
                 
         #Fill in end
