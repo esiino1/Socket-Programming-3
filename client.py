@@ -52,7 +52,6 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
         ttl = ((int(binascii.hexlify(sent), 16)) - timeReceived) * 1000
 
         ip_header = struct.unpack('!BBHHHBBH4s4s', recPacket[:20])
-        sent_addr = socket.inet_ntoa(ip_header[8])
         ttl = int(binascii.hexlify(sent), 16)
         length = len(recPacket) - 20
 
@@ -60,7 +59,7 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
         
         if ID == id:
             byte = struct.calcsize("d")
-            return '{} bytes from {}: icmp_seq = {} ttl = {} time = {:.3f} ms'.format(length, sent_addr, sequence, ttl, rtt)
+            return '{} bytes from {}: icmp_seq = {} ttl = {} time = {:.3f} ms'.format(length, destAddr, sequence, ttl, rtt)
         
                 
         #Fill in end
