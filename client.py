@@ -64,8 +64,7 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
         
 
 def sendOnePing(mySocket, destAddr, ID):
-# Header is 
-(8), code (8), checksum (16), id (16), sequence (16)
+# Header is (8), code (8), checksum (16), id (16), sequence (16)
     myChecksum = 0
     # Make a dummy header with a 0 checksum
     # struct -- Interpret strings as packed binary data
