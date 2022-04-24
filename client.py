@@ -53,7 +53,7 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
         timeSent,  = struct.unpack('d', recPacket[28:])
         
         header = struct.unpack('!BBHHHBBH4s4s' , recPacket[:20])
-        ttl = ip_header[5]
+        ttl = header[5]
         data = len(recPacket) - 20
         return (rtt (type, code, checksum, id, seq, data))
         
