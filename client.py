@@ -54,8 +54,8 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
             data = len(recPacket) - 20
             timeSent = struct.unpack('!BBHHHBBH4s4s' , recPacket[:20])
             delay = (timeReceived - timeSent)
-            ttl = 
-            return (type, code, seq, delay)
+            ttl = icmpHeader[5]
+            return (type, code, ttl, seq, data, delay)
                 
         #Fill in end
         
