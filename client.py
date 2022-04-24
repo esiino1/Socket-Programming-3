@@ -48,7 +48,7 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
 
         icmpHeader = recPacket[20:28]
         
-        type, code, checksum, id, seq = struct.unpack("!bbHHh", header)
+        type, code, checksum, id, seq = struct.unpack("!bbHHh", icmpHeader)
         
         if type == 0 and id == ID:
             byte_num = struct.calcsize("!d")
