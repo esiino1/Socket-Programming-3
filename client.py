@@ -55,7 +55,8 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
         header = struct.unpack('!BBHHHBBH4s4s' , recPacket[:20])
         ttl = header[5]
         data = len(recPacket) - 20
-        return (type, code, checksum, id, seq, data)
+        rtt = (timeReceived - timeSent) * 1000
+        return (rtt (type, code, checksum, id, seq, data))
         
         #if type == 0:
             #data = len(recPacket) - 20
