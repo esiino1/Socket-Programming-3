@@ -52,9 +52,9 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
         
         if type == 0:
             byte_num = struct.calcsize("!d")
-            time_sent = struct.unpack("!d", recPacket[28: 28 + byte_num])[0]
+            timeSent = struct.unpack("!d", recPacket[28: 28 + byte_num])[0]
             delay = (timeReceived - timeSent)
-            return (type, code, checksum, seq)
+            return (type, code, checksum, seq, byte_num)
                 
         #Fill in end
         
