@@ -47,17 +47,14 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
         #Fetch the ICMP header from the IP packet
 
         icmpHeader = recPacket[20:28]
-
-        sent = struct.unpack('s', bytes([recPacket[8]]))[0]
-        rtt = ((int(binascii.hexlify(sent), 16)) - timeReceived) * 1000
-
-        ip_header = struct.unpack('!BBHHHBBH4s4s', recPacket[:20])
-        ttl = int(binascii.hexlify(sent))
-        length = len(recPacket) - 20
-
-        Type, Code, Checksum, ID, Sequence, ttl = struct.unpack("bbHHh", icmpHeader)
         
-        return icmpHeader
+        type, code, checksum, id, seq = struct.unpack("!bbHHh", header)
+        
+        if type == 0 and id == ID
+            byte_num = struct.calcsize("!d")
+            time_sent = struct.unpack("!d", recPacket[28: 28 + byte_num])[0]
+            delay (timeReceived = timeSent)
+            return (type, code, checksum, seq)
                 
         #Fill in end
         
@@ -67,7 +64,8 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
         
 
 def sendOnePing(mySocket, destAddr, ID):
-# Header is type (8), code (8), checksum (16), id (16), sequence (16)
+# Header is 
+(8), code (8), checksum (16), id (16), sequence (16)
     myChecksum = 0
     # Make a dummy header with a 0 checksum
     # struct -- Interpret strings as packed binary data
