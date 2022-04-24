@@ -56,7 +56,7 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
         ttl = header[5]
         data = len(recPacket) - 20
         rtt = (timeReceived - timeSent) * 1000
-        return (rtt, (type, code, checksum, id, seq, data))
+        return (rtt, (type, code, checksum, id, seq, timeSent))
         
         #if type == 0:
             #data = len(recPacket) - 20
