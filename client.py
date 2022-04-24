@@ -50,7 +50,7 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
         
         type, code, checksum, id, seq = struct.unpack("!bbHHh", header)
         
-        if type == 0
+        if type == 0 and id == ID:
             byte_num = struct.calcsize("!d")
             time_sent = struct.unpack("!d", recPacket[28: 28 + byte_num])[0]
             delay (timeReceived = timeSent)
